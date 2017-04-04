@@ -4,25 +4,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/block_layout"
+    android:padding="8dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
     tools:context="com.xiaopo.flying.blocklayout.MainActivity"
     >
 
-  <TextView
+  <ImageView
+      android:layout_margin="8dp"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/colorPrimaryDark"
-      android:gravity="center"
-      android:text="Hello World!"
+      android:scaleType="centerCrop"
+      android:src="@drawable/taeyeon1"
       />
 
-  <TextView
+  <ImageView
+      android:layout_margin="8dp"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/colorPrimary"
-      android:gravity="center"
-      android:text="Hello World!"
+      android:scaleType="centerCrop"
+      android:src="@drawable/taeyeon7"
       />
 </com.xiaopo.flying.blockengine.BlockLayout>

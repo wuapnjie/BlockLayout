@@ -92,7 +92,10 @@ public class BlockLayout extends ViewGroup {
       final Block block = puzzleLayout.getBlock(i);
       final View child = getChildAt(i);
 
-      layoutChild(child, block.left(), block.top(), block.right(), block.bottom());
+      final MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
+
+      layoutChild(child, block.left() + params.leftMargin, block.top() + params.topMargin,
+          block.right() - params.rightMargin, block.bottom() - params.bottomMargin);
     }
   }
 

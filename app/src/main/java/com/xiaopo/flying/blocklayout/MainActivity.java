@@ -14,9 +14,4 @@ public class MainActivity extends AppCompatActivity {
 
     blockLayout.setPuzzleLayout(new TestLayout());
   }
-
-  @Override protected void onResume() {
-    super.onResume();
-    blockLayout.requestLayout();
-  }
 }
