@@ -4,28 +4,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/block_layout"
-    android:padding="8dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
+    android:padding="8dp"
     tools:context="com.xiaopo.flying.blocklayout.MainActivity"
     >
 
   <ImageView
-      android:layout_margin="8dp"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_margin="8dp"
       android:background="@color/colorPrimaryDark"
       android:scaleType="centerCrop"
       android:src="@drawable/taeyeon1"
       />
 
   <ImageView
-      android:layout_margin="8dp"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_margin="8dp"
       android:background="@color/colorPrimary"
       android:scaleType="centerCrop"
       android:src="@drawable/taeyeon7"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="8dp"
+      android:background="@color/colorPrimary"
+      android:gravity="center"
+      android:text="Good morning!"
+      android:textSize="16sp"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="8dp"
+      android:gravity="center"
+      android:text="Good night!"
+      android:textColor="@android:color/white"
+      android:textSize="24sp"
       />
 </com.xiaopo.flying.blockengine.BlockLayout>

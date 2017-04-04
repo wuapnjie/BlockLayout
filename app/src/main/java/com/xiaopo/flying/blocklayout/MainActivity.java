@@ -2,6 +2,7 @@ package com.xiaopo.flying.blocklayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
 import com.xiaopo.flying.blockengine.BlockLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,5 +14,6 @@ public class MainActivity extends AppCompatActivity {
     blockLayout = (BlockLayout) findViewById(R.id.block_layout);
 
     blockLayout.setPuzzleLayout(new TestLayout());
+    blockLayout.addViewAtBlock(new EditText(this), 2);
   }
 }
