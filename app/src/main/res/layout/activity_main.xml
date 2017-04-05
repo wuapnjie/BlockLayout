@@ -51,6 +51,5 @@
       android:text="Good night!"
       android:textColor="@android:color/white"
       android:textSize="24sp"
-      android:layout_gravity="top|center_horizontal"
       />
 </com.xiaopo.flying.blockengine.BlockLayout>
