@@ -51,7 +51,7 @@ public class BlockLayout extends ViewGroup {
   @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-    if (puzzleLayout != null) {
+    if (puzzleLayout != null && puzzleLayout.getBlockSize() > 0) {
       final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
       final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 

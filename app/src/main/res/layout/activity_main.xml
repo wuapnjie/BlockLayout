@@ -43,13 +43,14 @@
       />
 
   <TextView
-      android:layout_width="match_parent"
-      android:layout_height="200dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_margin="8dp"
       android:background="#55000000"
       android:gravity="center"
       android:text="Good night!"
       android:textColor="@android:color/white"
       android:textSize="24sp"
+      android:layout_gravity="center"
       />
 </com.xiaopo.flying.blockengine.BlockLayout>

@@ -11,7 +11,15 @@ import android.util.Log;
 public class Line {
 
   public enum Direction {
-    HORIZONTAL, VERTICAL
+    HORIZONTAL, VERTICAL;
+
+    public static Direction get(int direction) {
+      if (direction == 0) {
+        return HORIZONTAL;
+      } else {
+        return VERTICAL;
+      }
+    }
   }
 
   /**
