@@ -107,15 +107,6 @@ public class BlockLayout extends ViewGroup {
         block = puzzleLayout.getBlock(blockPosition);
       }
 
-      final LayoutParams params = (LayoutParams) child.getLayoutParams();
-
-      int childWidth = child.getMeasuredWidth();
-      int childHeight = child.getMeasuredHeight();
-
-      Log.d(TAG, "onLayout: child size --> (" + childWidth + "," + childHeight + ")");
-
-      Log.d(TAG, "onLayout: params -->" + params.gravity);
-
       layoutChildInBlock(child ,block);
     }
   }
