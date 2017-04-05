@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.xiaopo.flying.blockengine.BlockLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/block_layout"
     android:layout_width="match_parent"
@@ -18,6 +17,7 @@
       android:background="@color/colorPrimaryDark"
       android:scaleType="centerCrop"
       android:src="@drawable/taeyeon1"
+      android:layout_gravity="right"
       />
 
   <ImageView
@@ -27,6 +27,7 @@
       android:background="@color/colorPrimary"
       android:scaleType="centerCrop"
       android:src="@drawable/taeyeon7"
+      android:layout_gravity="left"
       />
 
   <TextView
@@ -38,16 +39,18 @@
       android:text="Good morning!"
       android:textColor="@android:color/white"
       android:textSize="16sp"
+      android:layout_gravity="top"
       />
 
   <TextView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="200dp"
       android:layout_margin="8dp"
       android:background="#55000000"
       android:gravity="center"
       android:text="Good night!"
       android:textColor="@android:color/white"
       android:textSize="24sp"
+      android:layout_gravity="top|center_horizontal"
       />
 </com.xiaopo.flying.blockengine.BlockLayout>

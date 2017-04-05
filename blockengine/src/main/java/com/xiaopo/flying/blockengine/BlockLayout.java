@@ -6,8 +6,10 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import java.util.HashMap;
 
 /**
@@ -16,6 +18,7 @@ import java.util.HashMap;
 
 public class BlockLayout extends ViewGroup {
   private static final String TAG = "BlockLayout";
+  private static final int DEFAULT_CHILD_GRAVITY = Gravity.TOP | Gravity.START;
 
   private PuzzleLayout puzzleLayout;
   private RectF blockRect;
@@ -76,9 +79,12 @@ public class BlockLayout extends ViewGroup {
           block = puzzleLayout.getBlock(blockPosition);
         }
 
+        int measureWidth = (int) block.width();
+        int measureHeight = (int) block.height();
+
         Log.d(TAG, "onMeasure: (" + block.width() + "," + block.height() + ")");
-        measureChild(child, MeasureSpec.makeMeasureSpec((int) block.width(), widthMode),
-            MeasureSpec.makeMeasureSpec((int) block.height(), heightMode));
+        measureChild(child, MeasureSpec.makeMeasureSpec(measureWidth, widthMode),
+            MeasureSpec.makeMeasureSpec(measureHeight, heightMode));
       }
     }
   }
@@ -101,24 +107,81 @@ public class BlockLayout extends ViewGroup {
         block = puzzleLayout.getBlock(blockPosition);
       }
 
-      final MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
+      final LayoutParams params = (LayoutParams) child.getLayoutParams();
 
-      layoutChild(child, block.left() + params.leftMargin, block.top() + params.topMargin,
-          block.right() - params.rightMargin, block.bottom() - params.bottomMargin);
+      int childWidth = child.getMeasuredWidth();
+      int childHeight = child.getMeasuredHeight();
+
+      Log.d(TAG, "onLayout: child size --> (" + childWidth + "," + childHeight + ")");
+
+      Log.d(TAG, "onLayout: params -->" + params.gravity);
+
+      layoutChildInBlock(child ,block);
     }
   }
 
-  public void layoutChild(final View child, float left, float top, float right, float bottom) {
-    Log.d(TAG, "layoutChild: (" + left + "," + top + "," + right + "," + bottom + ")");
-    child.layout((int) left, (int) top, (int) right, (int) bottom);
+  private void layoutChildInBlock(View child, Block block) {
+    if (child.getVisibility() == GONE) return;
+
+    final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+
+    int gravity = lp.gravity;
+    if (gravity == -1) {
+      gravity = DEFAULT_CHILD_GRAVITY;
+    }
+
+    final int layoutDirection = getLayoutDirection();
+    final int absoluteGravity = Gravity.getAbsoluteGravity(gravity, layoutDirection);
+    final int verticalGravity = gravity & Gravity.VERTICAL_GRAVITY_MASK;
+
+    final int width = child.getMeasuredWidth();
+    final int height = child.getMeasuredHeight();
+
+    int childLeft;
+    int childTop;
+
+    final int parentLeft = (int) block.left();
+    final int parentTop = (int) block.top();
+    final int parentRight = (int) block.right();
+    final int parentBottom = (int) block.bottom();
+
+    switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
+      case Gravity.CENTER_HORIZONTAL:
+        childLeft = parentLeft + (parentRight - parentLeft - width) / 2 +
+            lp.leftMargin - lp.rightMargin;
+        break;
+      case Gravity.RIGHT:
+          childLeft = parentRight - width - lp.rightMargin;
+          break;
+      case Gravity.LEFT:
+      default:
+        childLeft = parentLeft + lp.leftMargin;
+    }
+
+    switch (verticalGravity) {
+      case Gravity.TOP:
+        childTop = parentTop + lp.topMargin;
+        break;
+      case Gravity.CENTER_VERTICAL:
+        childTop = parentTop + (parentBottom - parentTop - height) / 2 +
+            lp.topMargin - lp.bottomMargin;
+        break;
+      case Gravity.BOTTOM:
+        childTop = parentBottom - height - lp.bottomMargin;
+        break;
+      default:
+        childTop = parentTop + lp.topMargin;
+    }
+
+    child.layout(childLeft, childTop, childLeft + width, childTop + height);
   }
 
   @Override public LayoutParams generateLayoutParams(AttributeSet attrs) {
-    return new MarginLayoutParams(getContext(), attrs);
+    return new LayoutParams(getContext(), attrs);
   }
 
   @Override protected LayoutParams generateDefaultLayoutParams() {
-    return new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
   }
 
   @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -160,5 +223,35 @@ public class BlockLayout extends ViewGroup {
 
     viewBlockMap.put(view, blockPosition);
     addView(view);
+  }
+
+  public static class LayoutParams extends FrameLayout.LayoutParams {
+
+    public LayoutParams(Context c, AttributeSet attrs) {
+      super(c, attrs);
+    }
+
+    public LayoutParams(int width, int height) {
+      super(width, height);
+    }
+
+    public LayoutParams(int width, int height, int gravity) {
+      super(width, height);
+      this.gravity = gravity;
+    }
+
+    public LayoutParams(MarginLayoutParams source) {
+      super(source);
+    }
+
+    public LayoutParams(ViewGroup.LayoutParams source) {
+      super(source);
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public LayoutParams(LayoutParams source) {
+      super(source);
+      this.gravity = source.gravity;
+    }
   }
 }
