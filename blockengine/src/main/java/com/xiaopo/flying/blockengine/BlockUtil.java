@@ -1,20 +1,16 @@
 package com.xiaopo.flying.blockengine;
 
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author wupanjie
  */
-class BlockUtil {
+public class BlockUtil {
   private static final String TAG = "BlockUtil";
 
-  static Line createLine(final Block block, final Line.Direction direction, final float ratio) {
+  public static Line createLine(final Block block, final Line.Direction direction, final float ratio) {
     PointF one = new PointF();
     PointF two = new PointF();
     if (direction == Line.Direction.HORIZONTAL) {
@@ -48,7 +44,7 @@ class BlockUtil {
     return line;
   }
 
-  static List<Block> cutBorder(final Block block, final Line line) {
+  public static List<Block> cutBorder(final Block block, final Line line) {
     List<Block> list = new ArrayList<>();
     if (line.getDirection() == Line.Direction.HORIZONTAL) {
       Block one = new Block(block);
@@ -71,7 +67,7 @@ class BlockUtil {
     return list;
   }
 
-  static List<Block> cutBorder(final Block block, final Line l1, final Line l2, final Line l3,
+  public static List<Block> cutBorder(final Block block, final Line l1, final Line l2, final Line l3,
       Line.Direction direction) {
     List<Block> list = new ArrayList<>();
     if (direction == Line.Direction.HORIZONTAL) {
@@ -144,7 +140,7 @@ class BlockUtil {
     return list;
   }
 
-  static List<Block> cutBorder(final Block block, final Line l1, final Line l2, final Line l3,
+  public static List<Block> cutBorder(final Block block, final Line l1, final Line l2, final Line l3,
       final Line l4, Line.Direction direction) {
     List<Block> list = new ArrayList<>();
     if (direction == Line.Direction.HORIZONTAL) {
@@ -242,7 +238,7 @@ class BlockUtil {
     return list;
   }
 
-  static List<Block> cutBorder(final Block block, final Line l1, final Line l2, final Line l3,
+  public static List<Block> cutBorder(final Block block, final Line l1, final Line l2, final Line l3,
       final Line l4) {
     List<Block> list = new ArrayList<>();
 
@@ -300,7 +296,7 @@ class BlockUtil {
     return list;
   }
 
-  static List<Block> cutBorderCross(final Block block, final Line horizontal,
+  public static List<Block> cutBorderCross(final Block block, final Line horizontal,
       final Line vertical) {
     List<Block> list = new ArrayList<>();
 
@@ -325,40 +321,5 @@ class BlockUtil {
     list.add(four);
 
     return list;
-  }
-
-  /**
-   * create a matrix which let bitmap centerCrop in the block rect
-   */
-  static Matrix createMatrix(Block block, Bitmap bitmap, float extraSize) {
-    return createMatrix(block, bitmap.getWidth(), bitmap.getHeight(), extraSize);
-  }
-
-  static Matrix createMatrix(Block block, Drawable drawable, float extraSize) {
-    return createMatrix(block, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
-        extraSize);
-  }
-
-  static Matrix createMatrix(Block block, int width, int height, float extraSize) {
-    final RectF rectF = block.getRect();
-
-    Matrix matrix = new Matrix();
-
-    float offsetX = rectF.centerX() - width / 2;
-    float offsetY = rectF.centerY() - height / 2;
-
-    matrix.postTranslate(offsetX, offsetY);
-
-    float scale;
-
-    if (width * rectF.height() > rectF.width() * height) {
-      scale = (rectF.height() + extraSize) / height;
-    } else {
-      scale = (rectF.width() + extraSize) / width;
-    }
-
-    matrix.postScale(scale, scale, rectF.centerX(), rectF.centerY());
-
-    return matrix;
   }
 }

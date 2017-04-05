@@ -1,8 +1,6 @@
-package com.xiaopo.flying.blocklayout;
+package com.xiaopo.flying.blockengine;
 
 import android.text.TextUtils;
-import com.xiaopo.flying.blockengine.Line;
-import com.xiaopo.flying.blockengine.PuzzleLayout;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,10 +8,10 @@ import org.json.JSONObject;
  * @author wupanjie
  */
 
-public class JsonTestLayout extends PuzzleLayout {
+public class JsonPuzzleLayout extends PuzzleLayout {
   private final String layoutJsonString;
 
-  public JsonTestLayout(String layoutJsonString) {
+  public JsonPuzzleLayout(String layoutJsonString) {
     this.layoutJsonString = layoutJsonString;
   }
 

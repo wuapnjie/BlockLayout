@@ -5,9 +5,7 @@ import java.util.Comparator;
 /**
  * @author wupanjie
  */
-class BlockComparator implements Comparator<Block> {
-  private static final String TAG = "BlockComparator";
-
+public class BlockComparator implements Comparator<Block> {
   @Override public int compare(Block lhs, Block rhs) {
     if (lhs.getRect().top < rhs.getRect().top) {
       return -1;

@@ -1,4 +1,4 @@
-package com.xiaopo.flying.blockengine;
+package com.xiaopo.flying.blockengine.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import com.xiaopo.flying.blockengine.Block;
+import com.xiaopo.flying.blockengine.PuzzleLayout;
 import java.util.HashMap;
 
 /**
@@ -82,7 +84,6 @@ public class BlockLayout extends ViewGroup {
         int measureWidth = (int) block.width();
         int measureHeight = (int) block.height();
 
-        Log.d(TAG, "onMeasure: (" + block.width() + "," + block.height() + ")");
         measureChild(child, MeasureSpec.makeMeasureSpec(measureWidth, widthMode),
             MeasureSpec.makeMeasureSpec(measureHeight, heightMode));
       }
@@ -91,7 +92,7 @@ public class BlockLayout extends ViewGroup {
 
   @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
     if (puzzleLayout == null) {
-      Log.d(TAG, "onLayout: the puzzle layout can not be null");
+      Log.e(TAG, "onLayout: the puzzle layout can not be null");
       return;
     }
 
@@ -181,8 +182,6 @@ public class BlockLayout extends ViewGroup {
     blockRect.top = getPaddingTop();
     blockRect.right = w - getPaddingRight();
     blockRect.bottom = h - getPaddingBottom();
-
-    Log.d(TAG, "onSizeChanged: (" + w + "," + h + ")");
 
     if (puzzleLayout != null) {
       puzzleLayout.reset();

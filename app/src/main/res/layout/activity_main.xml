@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.xiaopo.flying.blockengine.BlockLayout
+<com.xiaopo.flying.blockengine.widget.BlockLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/block_layout"
@@ -53,4 +53,4 @@
       android:textSize="24sp"
       android:layout_gravity="center"
       />
-</com.xiaopo.flying.blockengine.BlockLayout>
+</com.xiaopo.flying.blockengine.widget.BlockLayout>

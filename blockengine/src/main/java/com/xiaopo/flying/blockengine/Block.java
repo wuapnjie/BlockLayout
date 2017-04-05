@@ -6,34 +6,31 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * the border to layout puzzle piece
+ * the block to layout puzzle piece
  *
- * each border consist of four lines : left,top,right,bottom
+ * each block consist of four lines : left,top,right,bottom
  * @see Line
  * <p>
  * @author wupanjie
  */
-class Block {
+public class Block {
   Line lineLeft;
   Line lineTop;
   Line lineRight;
   Line lineBottom;
 
-  Block(Block src) {
+  public Block(Block src) {
     lineLeft = src.lineLeft;
     lineTop = src.lineTop;
     lineRight = src.lineRight;
     lineBottom = src.lineBottom;
   }
 
-  Block(RectF baseRect) {
+  public Block(RectF baseRect) {
     setBaseRect(baseRect);
   }
 
   private void setBaseRect(RectF baseRect) {
-    float width = baseRect.width();
-    float height = baseRect.height();
-
     PointF one = new PointF(baseRect.left, baseRect.top);
     PointF two = new PointF(baseRect.right, baseRect.top);
     PointF three = new PointF(baseRect.left, baseRect.bottom);
@@ -45,47 +42,47 @@ class Block {
     lineBottom = new Line(three, four);
   }
 
-  float width() {
+  public float width() {
     return lineRight.start.x - lineLeft.start.x;
   }
 
-  float height() {
+  public float height() {
     return lineBottom.start.y - lineTop.start.y;
   }
 
-  float left() {
+  public float left() {
     return lineLeft.start.x;
   }
 
-  float top() {
+  public float top() {
     return lineTop.start.y;
   }
 
-  float right() {
+  public float right() {
     return lineRight.start.x;
   }
 
-  float bottom() {
+  public float bottom() {
     return lineBottom.start.y;
   }
 
-  float centerX() {
+  public float centerX() {
     return (right() + left()) * 0.5f;
   }
 
-  float centerY() {
+  public float centerY() {
     return (bottom() + top()) * 0.5f;
   }
 
-  List<Line> getLines() {
+  public List<Line> getLines() {
     return Arrays.asList(lineLeft, lineTop, lineRight, lineBottom);
   }
 
-  RectF getRect() {
+  public RectF getRect() {
     return new RectF(left(), top(), right(), bottom());
   }
 
-  boolean contains(Line line) {
+  public boolean contains(Line line) {
     return lineLeft == line || lineTop == line || lineRight == line || lineBottom == line;
   }
 
