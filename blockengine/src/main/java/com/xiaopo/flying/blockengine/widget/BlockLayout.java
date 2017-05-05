@@ -17,7 +17,6 @@ import java.util.HashMap;
 /**
  * @author wupanjie
  */
-
 public class BlockLayout extends ViewGroup {
   private static final String TAG = "BlockLayout";
   private static final int DEFAULT_CHILD_GRAVITY = Gravity.TOP | Gravity.START;
