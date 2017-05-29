@@ -9,15 +9,21 @@ import java.util.List;
  * the block to layout puzzle piece
  *
  * each block consist of four lines : left,top,right,bottom
+ *
+ * @author wupanjie
  * @see Line
  * <p>
- * @author wupanjie
  */
 public class Block {
   Line lineLeft;
   Line lineTop;
   Line lineRight;
   Line lineBottom;
+
+  private float paddingLeft;
+  private float paddingTop;
+  private float paddingRight;
+  private float paddingBottom;
 
   public Block(Block src) {
     lineLeft = src.lineLeft;
@@ -43,27 +49,27 @@ public class Block {
   }
 
   public float width() {
-    return lineRight.start.x - lineLeft.start.x;
+    return right() - left();
   }
 
   public float height() {
-    return lineBottom.start.y - lineTop.start.y;
+    return bottom() - top();
   }
 
   public float left() {
-    return lineLeft.start.x;
+    return lineLeft.start.x + paddingLeft;
   }
 
   public float top() {
-    return lineTop.start.y;
+    return lineTop.start.y + paddingTop;
   }
 
   public float right() {
-    return lineRight.start.x;
+    return lineRight.start.x - paddingRight;
   }
 
   public float bottom() {
-    return lineBottom.start.y;
+    return lineBottom.start.y - paddingTop;
   }
 
   public float centerX() {
@@ -72,6 +78,39 @@ public class Block {
 
   public float centerY() {
     return (bottom() + top()) * 0.5f;
+  }
+
+  public float getPaddingLeft() {
+    return paddingLeft;
+  }
+
+  public float getPaddingTop() {
+    return paddingTop;
+  }
+
+  public float getPaddingRight() {
+    return paddingRight;
+  }
+
+  public float getPaddingBottom() {
+    return paddingBottom;
+  }
+
+  public void setPadding(float padding) {
+    setPadding(padding, padding, padding, padding);
+  }
+
+  public void setPadding(float paddingLeft, float paddingTop, float paddingRight,
+      float paddingBottom) {
+    this.paddingLeft = paddingLeft;
+    this.paddingTop = paddingTop;
+    this.paddingRight = paddingRight;
+    this.paddingBottom = paddingBottom;
+
+    this.paddingLeft = paddingLeft;
+    this.paddingTop = paddingTop;
+    this.paddingRight = paddingRight;
+    this.paddingBottom = paddingBottom;
   }
 
   public List<Line> getLines() {

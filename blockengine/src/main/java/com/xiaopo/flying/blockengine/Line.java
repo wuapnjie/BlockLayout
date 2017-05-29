@@ -34,10 +34,10 @@ public class Line {
   private Line attachLineStart;
   private Line attachLineEnd;
 
-  private Line mUpperLine;
-  private Line mLowerLine;
+  private Line upperLine;
+  private Line lowerLine;
 
-  private final RectF mBound = new RectF();
+  private final RectF bounds = new RectF();
 
   @Override public String toString() {
 
@@ -94,45 +94,45 @@ public class Line {
 
   public boolean contains(float x, float y, float extra) {
     if (direction == Direction.HORIZONTAL) {
-      mBound.left = start.x;
-      mBound.right = end.x;
-      mBound.top = start.y - extra / 2;
-      mBound.bottom = start.y + extra / 2;
+      bounds.left = start.x;
+      bounds.right = end.x;
+      bounds.top = start.y - extra / 2;
+      bounds.bottom = start.y + extra / 2;
     } else if (direction == Direction.VERTICAL) {
-      mBound.top = start.y;
-      mBound.bottom = end.y;
-      mBound.left = start.x - extra / 2;
-      mBound.right = start.x + extra / 2;
+      bounds.top = start.y;
+      bounds.bottom = end.y;
+      bounds.left = start.x - extra / 2;
+      bounds.right = start.x + extra / 2;
     }
 
-    return mBound.contains(x, y);
+    return bounds.contains(x, y);
   }
 
   public RectF getCenterBound(float position, float length, float borderStrokeWidth,
       boolean isStartLine) {
     if (direction == Direction.HORIZONTAL) {
-      mBound.left = position - length / 4;
-      mBound.right = position + length / 4;
+      bounds.left = position - length / 4;
+      bounds.right = position + length / 4;
       if (isStartLine) {
-        mBound.top = start.y - borderStrokeWidth * 1.5f + borderStrokeWidth / 2;
-        mBound.bottom = start.y + borderStrokeWidth * 1.5f + borderStrokeWidth / 2;
+        bounds.top = start.y - borderStrokeWidth * 1.5f + borderStrokeWidth / 2;
+        bounds.bottom = start.y + borderStrokeWidth * 1.5f + borderStrokeWidth / 2;
       } else {
-        mBound.top = start.y - borderStrokeWidth * 1.5f - borderStrokeWidth / 2;
-        mBound.bottom = start.y + borderStrokeWidth * 1.5f - borderStrokeWidth / 2;
+        bounds.top = start.y - borderStrokeWidth * 1.5f - borderStrokeWidth / 2;
+        bounds.bottom = start.y + borderStrokeWidth * 1.5f - borderStrokeWidth / 2;
       }
     } else if (direction == Direction.VERTICAL) {
-      mBound.top = position - length / 4;
-      mBound.bottom = position + length / 4;
+      bounds.top = position - length / 4;
+      bounds.bottom = position + length / 4;
       if (isStartLine) {
-        mBound.left = start.x - borderStrokeWidth * 1.5f + borderStrokeWidth / 2;
-        mBound.right = start.x + borderStrokeWidth * 1.5f + borderStrokeWidth / 2;
+        bounds.left = start.x - borderStrokeWidth * 1.5f + borderStrokeWidth / 2;
+        bounds.right = start.x + borderStrokeWidth * 1.5f + borderStrokeWidth / 2;
       } else {
-        mBound.left = start.x - borderStrokeWidth * 1.5f - borderStrokeWidth / 2;
-        mBound.right = start.x + borderStrokeWidth * 1.5f - borderStrokeWidth / 2;
+        bounds.left = start.x - borderStrokeWidth * 1.5f - borderStrokeWidth / 2;
+        bounds.right = start.x + borderStrokeWidth * 1.5f - borderStrokeWidth / 2;
       }
     }
 
-    return mBound;
+    return bounds;
   }
 
   public void update() {
@@ -156,13 +156,13 @@ public class Line {
   public void moveTo(float position, float extra) {
     if (direction == Direction.HORIZONTAL) {
 
-      if (position < mLowerLine.start.y + extra || position > mUpperLine.start.y - extra) return;
+      if (position < lowerLine.start.y + extra || position > upperLine.start.y - extra) return;
 
       start.y = position;
       end.y = position;
     } else if (direction == Direction.VERTICAL) {
 
-      if (position < mLowerLine.start.x + extra || position > mUpperLine.start.x - extra) return;
+      if (position < lowerLine.start.x + extra || position > upperLine.start.x - extra) return;
 
       start.x = position;
       end.x = position;
@@ -190,18 +190,18 @@ public class Line {
   }
 
   public Line getUpperLine() {
-    return mUpperLine;
+    return upperLine;
   }
 
   public void setUpperLine(Line upperLine) {
-    mUpperLine = upperLine;
+    this.upperLine = upperLine;
   }
 
   public Line getLowerLine() {
-    return mLowerLine;
+    return lowerLine;
   }
 
   public void setLowerLine(Line lowerLine) {
-    mLowerLine = lowerLine;
+    this.lowerLine = lowerLine;
   }
 }

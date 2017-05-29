@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.widget.EditText;
 import com.xiaopo.flying.blockengine.widget.BlockLayout;
 import com.xiaopo.flying.blockengine.JsonPuzzleLayout;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
-  public static final String LAYOUT_JSON =
-      "{\"steps\":[{\"method\":\"addLine\",\"direction\":0,\"radio\":0.5,\"position\":0}]}";
   private BlockLayout blockLayout;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +18,35 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     blockLayout = (BlockLayout) findViewById(R.id.block_layout);
 
-    blockLayout.setPuzzleLayout(new JsonPuzzleLayout(LAYOUT_JSON));
-    blockLayout.addViewAtBlock(new EditText(this), 1);
+    blockLayout.setPuzzleLayout(new JsonPuzzleLayout(getLayoutInfo()));
+    //blockLayout.addViewAtBlock(new EditText(this), 1);
+
+    blockLayout.post(new Runnable() {
+      @Override public void run() {
+        blockLayout.printInfo();
+      }
+    });
+  }
+
+  private String getLayoutInfo() {
+    try {
+      InputStream inputStream = getAssets().open("layout.json");
+
+      BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+      StringBuilder builder = new StringBuilder();
+      String line;
+
+      while ((line = reader.readLine()) != null) {
+        builder.append(line);
+      }
+
+      reader.close();
+      inputStream.close();
+      return builder.toString();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return "";
   }
 }

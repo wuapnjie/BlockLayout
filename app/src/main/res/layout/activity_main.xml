@@ -6,51 +6,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:padding="8dp"
     tools:context="com.xiaopo.flying.blocklayout.MainActivity"
     >
 
-  <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_margin="8dp"
-      android:background="@color/colorPrimaryDark"
-      android:scaleType="centerCrop"
-      android:src="@drawable/taeyeon1"
-      android:layout_gravity="right"
-      />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/taeyeon1"
+        />
 
-  <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_margin="8dp"
-      android:background="@color/colorPrimary"
-      android:scaleType="centerCrop"
-      android:src="@drawable/taeyeon7"
-      android:layout_gravity="left"
-      />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/taeyeon7"
+        />
 
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_margin="8dp"
-      android:background="@color/colorPrimary"
-      android:gravity="center"
-      android:text="Good morning!"
-      android:textColor="@android:color/white"
-      android:textSize="16sp"
-      android:layout_gravity="top"
-      />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Good morning!"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        />
 
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="8dp"
-      android:background="#55000000"
-      android:gravity="center"
-      android:text="Good night!"
-      android:textColor="@android:color/white"
-      android:textSize="24sp"
-      android:layout_gravity="center"
-      />
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="8dp"-->
+    <!--android:background="#55000000"-->
+    <!--android:gravity="center"-->
+    <!--android:text="Good night!"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="24sp"-->
+    <!--android:layout_gravity="center"-->
+    <!--/>-->
 </com.xiaopo.flying.blockengine.widget.BlockLayout>

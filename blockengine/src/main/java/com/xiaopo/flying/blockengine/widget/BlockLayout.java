@@ -11,13 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import com.xiaopo.flying.blockengine.Block;
+import com.xiaopo.flying.blockengine.BuildConfig;
 import com.xiaopo.flying.blockengine.PuzzleLayout;
 import java.util.HashMap;
 
 /**
  * @author wupanjie
  */
-
 public class BlockLayout extends ViewGroup {
   private static final String TAG = "BlockLayout";
   private static final int DEFAULT_CHILD_GRAVITY = Gravity.TOP | Gravity.START;
@@ -75,17 +75,18 @@ public class BlockLayout extends ViewGroup {
       for (int i = 0; i < childSize; i++) {
         final View child = getChildAt(i);
         Block block = puzzleLayout.getBlock(i % blockSize);
+        LayoutParams lp = (LayoutParams) child.getLayoutParams();
 
         if (viewBlockMap.containsKey(child)) {
           int blockPosition = viewBlockMap.get(child);
           block = puzzleLayout.getBlock(blockPosition);
         }
 
-        int measureWidth = (int) block.width();
-        int measureHeight = (int) block.height();
+        int measureWidth = (int) block.width() - lp.leftMargin - lp.rightMargin;
+        int measureHeight = (int) block.height() - lp.topMargin - lp.bottomMargin;
 
-        measureChild(child, MeasureSpec.makeMeasureSpec(measureWidth, widthMode),
-            MeasureSpec.makeMeasureSpec(measureHeight, heightMode));
+        measureChild(child, MeasureSpec.makeMeasureSpec(measureWidth, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(measureHeight, MeasureSpec.EXACTLY));
       }
     }
   }
@@ -108,7 +109,7 @@ public class BlockLayout extends ViewGroup {
         block = puzzleLayout.getBlock(blockPosition);
       }
 
-      layoutChildInBlock(child ,block);
+      layoutChildInBlock(child, block);
     }
   }
 
@@ -139,12 +140,12 @@ public class BlockLayout extends ViewGroup {
 
     switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
       case Gravity.CENTER_HORIZONTAL:
-        childLeft = parentLeft + (parentRight - parentLeft - width) / 2 +
-            lp.leftMargin - lp.rightMargin;
+        childLeft =
+            parentLeft + (parentRight - parentLeft - width) / 2 + lp.leftMargin - lp.rightMargin;
         break;
       case Gravity.RIGHT:
-          childLeft = parentRight - width - lp.rightMargin;
-          break;
+        childLeft = parentRight - width - lp.rightMargin;
+        break;
       case Gravity.LEFT:
       default:
         childLeft = parentLeft + lp.leftMargin;
@@ -155,8 +156,8 @@ public class BlockLayout extends ViewGroup {
         childTop = parentTop + lp.topMargin;
         break;
       case Gravity.CENTER_VERTICAL:
-        childTop = parentTop + (parentBottom - parentTop - height) / 2 +
-            lp.topMargin - lp.bottomMargin;
+        childTop =
+            parentTop + (parentBottom - parentTop - height) / 2 + lp.topMargin - lp.bottomMargin;
         break;
       case Gravity.BOTTOM:
         childTop = parentBottom - height - lp.bottomMargin;
@@ -176,21 +177,21 @@ public class BlockLayout extends ViewGroup {
     return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
   }
 
-  @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-    super.onSizeChanged(w, h, oldw, oldh);
-    blockRect.left = getPaddingLeft();
-    blockRect.top = getPaddingTop();
-    blockRect.right = w - getPaddingRight();
-    blockRect.bottom = h - getPaddingBottom();
-
-    if (puzzleLayout != null) {
-      puzzleLayout.reset();
-      puzzleLayout.setOuterBlock(blockRect);
-      puzzleLayout.layout();
-
-      requestLayout();
-    }
-  }
+  //@Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+  //  super.onSizeChanged(w, h, oldw, oldh);
+  //  blockRect.left = getPaddingLeft();
+  //  blockRect.top = getPaddingTop();
+  //  blockRect.right = w - getPaddingRight();
+  //  blockRect.bottom = h - getPaddingBottom();
+  //
+  //  if (puzzleLayout != null) {
+  //    puzzleLayout.reset();
+  //    puzzleLayout.setOuterBlock(blockRect);
+  //    puzzleLayout.layout();
+  //
+  //    requestLayout();
+  //  }
+  //}
 
   public void setPuzzleLayout(PuzzleLayout puzzleLayout) {
     this.puzzleLayout = puzzleLayout;
@@ -238,10 +239,17 @@ public class BlockLayout extends ViewGroup {
       super(source);
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public LayoutParams(LayoutParams source) {
+    @TargetApi(Build.VERSION_CODES.KITKAT) public LayoutParams(LayoutParams source) {
       super(source);
       this.gravity = source.gravity;
+    }
+  }
+
+  public void printInfo() {
+    int i = 0;
+    for (Block block : puzzleLayout.getBlocks()) {
+      Log.d(TAG, "printInfo: block --> " + i++);
+      Log.d(TAG, "printInfo: block --> " + block.toString());
     }
   }
 }

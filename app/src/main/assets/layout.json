@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {
+      "method": "addLine",
+      "direction": 0,
+      "radio": 0.5,
+      "position": 0
+    }
+  ]
+}

@@ -22,15 +22,13 @@ import java.util.List;
 public abstract class PuzzleLayout {
   protected static final String TAG = "PuzzleLayout";
 
-  protected int mTheme;
+  private Block outerBlock;
 
-  private Block mOuterBlock;
+  private List<Block> blocks = new ArrayList<>();
+  private List<Line> lines = new ArrayList<>();
+  private List<Line> outerLines = new ArrayList<>(4);
 
-  private List<Block> mBlocks = new ArrayList<>();
-  private List<Line> mLines = new ArrayList<>();
-  private List<Line> mOuterLines = new ArrayList<>(4);
-
-  private Comparator<Block> mBorderComparator = new BlockComparator();
+  private Comparator<Block> boderComparator = new BlockComparator();
 
   public PuzzleLayout() {
 
@@ -51,31 +49,31 @@ public abstract class PuzzleLayout {
     Line lineRight = new Line(two, four);
     Line lineBottom = new Line(three, four);
 
-    mOuterLines.clear();
+    outerLines.clear();
 
-    mOuterLines.add(lineLeft);
-    mOuterLines.add(lineTop);
-    mOuterLines.add(lineRight);
-    mOuterLines.add(lineBottom);
+    outerLines.add(lineLeft);
+    outerLines.add(lineTop);
+    outerLines.add(lineRight);
+    outerLines.add(lineBottom);
 
-    mOuterBlock = new Block(baseRect);
+    outerBlock = new Block(baseRect);
 
-    mBlocks.clear();
-    mBlocks.add(mOuterBlock);
+    blocks.clear();
+    blocks.add(outerBlock);
   }
 
   public abstract void layout();
 
   protected List<Block> addLine(Block block, Line.Direction direction, float ratio) {
-    mBlocks.remove(block);
+    blocks.remove(block);
     Line line = BlockUtil.createLine(block, direction, ratio);
-    mLines.add(line);
+    lines.add(line);
 
     List<Block> blockList = BlockUtil.cutBorder(block, line);
-    mBlocks.addAll(blockList);
+    blocks.addAll(blockList);
 
     updateLineLimit();
-    Collections.sort(mBlocks, mBorderComparator);
+    Collections.sort(blocks, boderComparator);
 
     return blockList;
   }
@@ -92,21 +90,21 @@ public abstract class PuzzleLayout {
   }
 
   protected List<Block> addCross(Block block, float horizontalRadio, float verticalRadio) {
-    mBlocks.remove(block);
+    blocks.remove(block);
     Line horizontal = BlockUtil.createLine(block, Line.Direction.HORIZONTAL, horizontalRadio);
     Line vertical = BlockUtil.createLine(block, Line.Direction.VERTICAL, verticalRadio);
-    mLines.add(horizontal);
-    mLines.add(vertical);
+    lines.add(horizontal);
+    lines.add(vertical);
 
     List<Block> blockList = BlockUtil.cutBorderCross(block, horizontal, vertical);
-    mBlocks.addAll(blockList);
+    blocks.addAll(blockList);
 
     updateLineLimit();
 
-    if (mBorderComparator == null) {
-      mBorderComparator = new BlockComparator();
+    if (boderComparator == null) {
+      boderComparator = new BlockComparator();
     }
-    Collections.sort(mBlocks, mBorderComparator);
+    Collections.sort(blocks, boderComparator);
 
     return blockList;
   }
@@ -116,7 +114,7 @@ public abstract class PuzzleLayout {
       Log.e(TAG, "cutBorderEqualPart: the size can not be so great");
       return null;
     }
-    mBlocks.remove(block);
+    blocks.remove(block);
     List<Block> blockList = new ArrayList<>();
     switch (hSize) {
       case 1:
@@ -129,9 +127,9 @@ public abstract class PuzzleLayout {
             Line l2 = BlockUtil.createLine(block, Line.Direction.VERTICAL, 2f / 3);
             Line l3 = BlockUtil.createLine(block, Line.Direction.HORIZONTAL, 1f / 2);
 
-            mLines.add(l1);
-            mLines.add(l2);
-            mLines.add(l3);
+            lines.add(l1);
+            lines.add(l2);
+            lines.add(l3);
 
             blockList.addAll(BlockUtil.cutBorder(block, l1, l2, l3, Line.Direction.VERTICAL));
             break;
@@ -142,10 +140,10 @@ public abstract class PuzzleLayout {
             Line ll3 = BlockUtil.createLine(block, Line.Direction.VERTICAL, 3f / 4);
             Line ll4 = BlockUtil.createLine(block, Line.Direction.HORIZONTAL, 1f / 2);
 
-            mLines.add(ll1);
-            mLines.add(ll2);
-            mLines.add(ll3);
-            mLines.add(ll4);
+            lines.add(ll1);
+            lines.add(ll2);
+            lines.add(ll3);
+            lines.add(ll4);
 
             blockList.addAll(
                 BlockUtil.cutBorder(block, ll1, ll2, ll3, ll4, Line.Direction.VERTICAL));
@@ -161,9 +159,9 @@ public abstract class PuzzleLayout {
             Line l2 = BlockUtil.createLine(block, Line.Direction.HORIZONTAL, 2f / 3);
             Line l3 = BlockUtil.createLine(block, Line.Direction.VERTICAL, 1f / 2);
 
-            mLines.add(l1);
-            mLines.add(l2);
-            mLines.add(l3);
+            lines.add(l1);
+            lines.add(l2);
+            lines.add(l3);
 
             blockList.addAll(BlockUtil.cutBorder(block, l1, l2, l3, Line.Direction.HORIZONTAL));
 
@@ -174,10 +172,10 @@ public abstract class PuzzleLayout {
             Line ll3 = BlockUtil.createLine(block, Line.Direction.VERTICAL, 1f / 3);
             Line ll4 = BlockUtil.createLine(block, Line.Direction.VERTICAL, 2f / 3);
 
-            mLines.add(ll1);
-            mLines.add(ll2);
-            mLines.add(ll3);
-            mLines.add(ll4);
+            lines.add(ll1);
+            lines.add(ll2);
+            lines.add(ll3);
+            lines.add(ll4);
 
             blockList.addAll(BlockUtil.cutBorder(block, ll1, ll2, ll3, ll4));
             break;
@@ -192,10 +190,10 @@ public abstract class PuzzleLayout {
             Line ll3 = BlockUtil.createLine(block, Line.Direction.HORIZONTAL, 3f / 4);
             Line ll4 = BlockUtil.createLine(block, Line.Direction.VERTICAL, 1f / 2);
 
-            mLines.add(ll1);
-            mLines.add(ll2);
-            mLines.add(ll3);
-            mLines.add(ll4);
+            lines.add(ll1);
+            lines.add(ll2);
+            lines.add(ll3);
+            lines.add(ll4);
 
             blockList.addAll(
                 BlockUtil.cutBorder(block, ll1, ll2, ll3, ll4, Line.Direction.HORIZONTAL));
@@ -203,16 +201,16 @@ public abstract class PuzzleLayout {
         }
     }
 
-    mBlocks.addAll(blockList);
+    blocks.addAll(blockList);
 
     updateLineLimit();
-    Collections.sort(mBlocks, mBorderComparator);
+    Collections.sort(blocks, boderComparator);
 
     return blockList;
   }
 
   protected List<Block> cutSpiral(Block block) {
-    mBlocks.remove(block);
+    blocks.remove(block);
     List<Block> blockList = new ArrayList<>();
 
     float width = block.width();
@@ -252,10 +250,10 @@ public abstract class PuzzleLayout {
     l4.setUpperLine(l2);
     l4.setLowerLine(block.lineLeft);
 
-    mLines.add(l1);
-    mLines.add(l2);
-    mLines.add(l3);
-    mLines.add(l4);
+    lines.add(l1);
+    lines.add(l2);
+    lines.add(l3);
+    lines.add(l4);
 
     Block b1 = new Block(block);
     b1.lineRight = l2;
@@ -284,23 +282,23 @@ public abstract class PuzzleLayout {
     b5.lineTop = l3;
     blockList.add(b5);
 
-    mBlocks.addAll(blockList);
+    blocks.addAll(blockList);
 
     updateLineLimit();
-    Collections.sort(mBlocks, mBorderComparator);
+    Collections.sort(blocks, boderComparator);
 
     return blockList;
   }
 
   private void updateLineLimit() {
-    for (Line line : mLines) {
+    for (Line line : lines) {
       updateUpperLine(line);
       updateLowerLine(line);
     }
   }
 
   private void updateLowerLine(final Line line) {
-    for (Line l : mLines) {
+    for (Line l : lines) {
       if (l.getPosition() > line.getLowerLine().getPosition()
           && l.getPosition() < line.getPosition()
           && l.getDirection() == line.getDirection()) {
@@ -321,7 +319,7 @@ public abstract class PuzzleLayout {
   }
 
   private void updateUpperLine(final Line line) {
-    for (Line l : mLines) {
+    for (Line l : lines) {
       if (l.getPosition() < line.getUpperLine().getPosition()
           && l.getPosition() > line.getPosition()
           && l.getDirection() == line.getDirection()) {
@@ -342,42 +340,38 @@ public abstract class PuzzleLayout {
   }
 
   public void reset() {
-    mLines.clear();
-    mBlocks.clear();
-    mBlocks.add(mOuterBlock);
+    lines.clear();
+    blocks.clear();
+    blocks.add(outerBlock);
   }
 
   public void update() {
-    for (Line line : mLines) {
+    for (Line line : lines) {
       line.update();
     }
   }
 
   public int getBlockSize() {
-    return mBlocks.size();
+    return blocks.size();
   }
 
   public Block getBlock(int index) {
-    return mBlocks.get(index);
+    return blocks.get(index);
   }
 
   public List<Line> getLines() {
-    return mLines;
+    return lines;
   }
 
   public List<Block> getBlocks() {
-    return mBlocks;
+    return blocks;
   }
 
   public Block getOuterBlock() {
-    return mOuterBlock;
+    return outerBlock;
   }
 
   public List<Line> getOuterLines() {
-    return mOuterLines;
-  }
-
-  public int getTheme() {
-    return mTheme;
+    return outerLines;
   }
 }
