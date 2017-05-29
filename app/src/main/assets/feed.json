@@ -1,0 +1,24 @@
+{
+  "layout": {
+    "steps": [{
+      "method": "addLine",
+      "direction": 0,
+      "radio": 0.8,
+      "position": 0
+    }],
+    "view":[
+      {
+        "type":"image",
+        "url":"imageUrl"
+      },
+      {
+        "type":"text",
+        "text":"name"
+      }
+    ]
+  },
+  "data": {
+    "imageUrl":"http://7xrqmj.com1.z0.glb.clouddn.com/taeyeon5.jpg",
+    "name":"Taeyeon"
+  }
+}

@@ -29,21 +29,21 @@ public class JsonPuzzleLayout extends PuzzleLayout {
         if (TextUtils.equals(method, "addLine")) {
           int direction = step.optInt("direction");
           double radio = step.optDouble("radio");
-          addLine(getBlock(position), Line.Direction.get(direction), (float) radio);
+          addLine(position, Line.Direction.get(direction), (float) radio);
         } else if (TextUtils.equals(method, "addCross")) {
           double hRadio = step.optDouble("hRadio");
           double vRadio = step.optDouble("vRadio");
-          addCross(getBlock(position), (float) hRadio, (float) vRadio);
+          addCross(position, (float) hRadio, (float) vRadio);
         } else if (TextUtils.equals(method, "cutEqual1")) {
           int direction = step.optInt("direction");
           int part = step.optInt("part");
-          cutBlockEqualPart(getBlock(position), part, Line.Direction.get(direction));
+          cutBlockEqualPart(position, part, Line.Direction.get(direction));
         } else if (TextUtils.equals(method, "cutEqual2")) {
           int hSize = step.optInt("hSize");
           int vSize = step.optInt("vSize");
-          cutBlockEqualPart(getBlock(position), hSize, vSize);
+          cutBlockEqualPart(position, hSize, vSize);
         } else if (TextUtils.equals(method, "cutSpiral")) {
-          cutSpiral(getBlock(position));
+          cutSpiral(position);
         }
       }
     } catch (Exception e) {

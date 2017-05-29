@@ -1,5 +1,6 @@
 package com.xiaopo.flying.blockengine;
 
+import android.graphics.Point;
 import android.graphics.PointF;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +12,17 @@ public class BlockUtil {
   private static final String TAG = "BlockUtil";
 
   public static Line createLine(final Block block, final Line.Direction direction, final float ratio) {
-    PointF one = new PointF();
-    PointF two = new PointF();
+    Point one = new Point();
+    Point two = new Point();
     if (direction == Line.Direction.HORIZONTAL) {
       one.x = block.left();
-      one.y = block.height() * ratio + block.top();
+      one.y = (int) (block.height() * ratio + block.top());
       two.x = block.right();
-      two.y = block.height() * ratio + block.top();
+      two.y = (int) (block.height() * ratio + block.top());
     } else if (direction == Line.Direction.VERTICAL) {
-      one.x = block.width() * ratio + block.left();
+      one.x = (int) (block.width() * ratio + block.left());
       one.y = block.top();
-      two.x = block.width() * ratio + block.left();
+      two.x = (int) (block.width() * ratio + block.left());
       two.y = block.bottom();
     }
 

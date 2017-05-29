@@ -1,6 +1,7 @@
 package com.xiaopo.flying.blockengine;
 
-import android.graphics.PointF;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import java.util.Arrays;
 import java.util.List;
@@ -20,10 +21,10 @@ public class Block {
   Line lineRight;
   Line lineBottom;
 
-  private float paddingLeft;
-  private float paddingTop;
-  private float paddingRight;
-  private float paddingBottom;
+  private int paddingLeft;
+  private int paddingTop;
+  private int paddingRight;
+  private int paddingBottom;
 
   public Block(Block src) {
     lineLeft = src.lineLeft;
@@ -32,15 +33,15 @@ public class Block {
     lineBottom = src.lineBottom;
   }
 
-  public Block(RectF baseRect) {
+  public Block(Rect baseRect) {
     setBaseRect(baseRect);
   }
 
-  private void setBaseRect(RectF baseRect) {
-    PointF one = new PointF(baseRect.left, baseRect.top);
-    PointF two = new PointF(baseRect.right, baseRect.top);
-    PointF three = new PointF(baseRect.left, baseRect.bottom);
-    PointF four = new PointF(baseRect.right, baseRect.bottom);
+  private void setBaseRect(Rect baseRect) {
+    Point one = new Point(baseRect.left, baseRect.top);
+    Point two = new Point(baseRect.right, baseRect.top);
+    Point three = new Point(baseRect.left, baseRect.bottom);
+    Point four = new Point(baseRect.right, baseRect.bottom);
 
     lineLeft = new Line(one, three);
     lineTop = new Line(one, two);
@@ -48,60 +49,59 @@ public class Block {
     lineBottom = new Line(three, four);
   }
 
-  public float width() {
+  public int width() {
     return right() - left();
   }
 
-  public float height() {
+  public int height() {
     return bottom() - top();
   }
 
-  public float left() {
+  public int left() {
     return lineLeft.start.x + paddingLeft;
   }
 
-  public float top() {
+  public int top() {
     return lineTop.start.y + paddingTop;
   }
 
-  public float right() {
+  public int right() {
     return lineRight.start.x - paddingRight;
   }
 
-  public float bottom() {
+  public int bottom() {
     return lineBottom.start.y - paddingTop;
   }
 
-  public float centerX() {
-    return (right() + left()) * 0.5f;
+  public int centerX() {
+    return (right() + left()) / 2;
   }
 
-  public float centerY() {
-    return (bottom() + top()) * 0.5f;
+  public int centerY() {
+    return (bottom() + top()) / 2;
   }
 
-  public float getPaddingLeft() {
+  public int getPaddingLeft() {
     return paddingLeft;
   }
 
-  public float getPaddingTop() {
+  public int getPaddingTop() {
     return paddingTop;
   }
 
-  public float getPaddingRight() {
+  public int getPaddingRight() {
     return paddingRight;
   }
 
-  public float getPaddingBottom() {
+  public int getPaddingBottom() {
     return paddingBottom;
   }
 
-  public void setPadding(float padding) {
+  public void setPadding(int padding) {
     setPadding(padding, padding, padding, padding);
   }
 
-  public void setPadding(float paddingLeft, float paddingTop, float paddingRight,
-      float paddingBottom) {
+  public void setPadding(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom) {
     this.paddingLeft = paddingLeft;
     this.paddingTop = paddingTop;
     this.paddingRight = paddingRight;

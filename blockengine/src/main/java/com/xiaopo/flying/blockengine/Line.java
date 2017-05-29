@@ -1,6 +1,6 @@
 package com.xiaopo.flying.blockengine;
 
-import android.graphics.PointF;
+import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -26,8 +26,8 @@ public class Line {
    * for horizontal line, start means left, end means right
    * for vertical line, start means top, end means bottom
    */
-  final PointF start;
-  final PointF end;
+  final Point start;
+  final Point end;
 
   private Direction direction = Direction.HORIZONTAL;
 
@@ -63,7 +63,7 @@ public class Line {
     return stringBuilder.append("\n").toString();
   }
 
-  public Line(PointF start, PointF end) {
+  public Line(Point start, Point end) {
     this.start = start;
     this.end = end;
 
@@ -76,15 +76,15 @@ public class Line {
     }
   }
 
-  public float length() {
-    return (float) Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
+  public int length() {
+    return (int) Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
   }
 
-  public PointF centerPoint() {
-    return new PointF((end.x - start.x) / 2, (end.y - start.y) / 2);
+  public Point centerPoint() {
+    return new Point((end.x - start.x) / 2, (end.y - start.y) / 2);
   }
 
-  public float getPosition() {
+  public int getPosition() {
     if (direction == Direction.HORIZONTAL) {
       return start.y;
     } else {
@@ -92,7 +92,7 @@ public class Line {
     }
   }
 
-  public boolean contains(float x, float y, float extra) {
+  public boolean contains(int x, int y, int extra) {
     if (direction == Direction.HORIZONTAL) {
       bounds.left = start.x;
       bounds.right = end.x;
@@ -108,7 +108,7 @@ public class Line {
     return bounds.contains(x, y);
   }
 
-  public RectF getCenterBound(float position, float length, float borderStrokeWidth,
+  public RectF getCenterBound(int position, int length, int borderStrokeWidth,
       boolean isStartLine) {
     if (direction == Direction.HORIZONTAL) {
       bounds.left = position - length / 4;
@@ -153,7 +153,7 @@ public class Line {
     }
   }
 
-  public void moveTo(float position, float extra) {
+  public void moveTo(int position, int extra) {
     if (direction == Direction.HORIZONTAL) {
 
       if (position < lowerLine.start.y + extra || position > upperLine.start.y - extra) return;

@@ -1,7 +1,7 @@
 package com.xiaopo.flying.blockengine;
 
-import android.graphics.PointF;
-import android.graphics.RectF;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,21 +28,21 @@ public abstract class PuzzleLayout {
   private List<Line> lines = new ArrayList<>();
   private List<Line> outerLines = new ArrayList<>(4);
 
-  private Comparator<Block> boderComparator = new BlockComparator();
+  private Comparator<Block> borderComparator = new BlockComparator();
 
   public PuzzleLayout() {
 
   }
 
-  public PuzzleLayout(RectF baseRect) {
+  public PuzzleLayout(Rect baseRect) {
     setOuterBlock(baseRect);
   }
 
-  public void setOuterBlock(RectF baseRect) {
-    PointF one = new PointF(baseRect.left, baseRect.top);
-    PointF two = new PointF(baseRect.right, baseRect.top);
-    PointF three = new PointF(baseRect.left, baseRect.bottom);
-    PointF four = new PointF(baseRect.right, baseRect.bottom);
+  public void setOuterBlock(Rect baseRect) {
+    Point one = new Point(baseRect.left, baseRect.top);
+    Point two = new Point(baseRect.right, baseRect.top);
+    Point three = new Point(baseRect.left, baseRect.bottom);
+    Point four = new Point(baseRect.right, baseRect.bottom);
 
     Line lineLeft = new Line(one, three);
     Line lineTop = new Line(one, two);
@@ -64,6 +64,11 @@ public abstract class PuzzleLayout {
 
   public abstract void layout();
 
+  protected List<Block> addLine(int position, Line.Direction direction, float ratio) {
+    Block block = blocks.get(position);
+    return addLine(block, direction, ratio);
+  }
+
   protected List<Block> addLine(Block block, Line.Direction direction, float ratio) {
     blocks.remove(block);
     Line line = BlockUtil.createLine(block, direction, ratio);
@@ -73,23 +78,24 @@ public abstract class PuzzleLayout {
     blocks.addAll(blockList);
 
     updateLineLimit();
-    Collections.sort(blocks, boderComparator);
+    Collections.sort(blocks, borderComparator);
 
     return blockList;
   }
 
-  protected void cutBlockEqualPart(Block block, int part, Line.Direction direction) {
-    Block temp = block;
+  protected void cutBlockEqualPart(int position, int part, Line.Direction direction) {
+    Block temp = getBlock(position);
     for (int i = part; i > 1; i--) {
       temp = addLine(temp, direction, (float) (i - 1) / i).get(0);
     }
   }
 
-  protected List<Block> addCross(Block block, float radio) {
-    return addCross(block, radio, radio);
+  protected List<Block> addCross(int position, float radio) {
+    return addCross(position, radio, radio);
   }
 
-  protected List<Block> addCross(Block block, float horizontalRadio, float verticalRadio) {
+  protected List<Block> addCross(int position, float horizontalRadio, float verticalRadio) {
+    Block block = getBlock(position);
     blocks.remove(block);
     Line horizontal = BlockUtil.createLine(block, Line.Direction.HORIZONTAL, horizontalRadio);
     Line vertical = BlockUtil.createLine(block, Line.Direction.VERTICAL, verticalRadio);
@@ -101,15 +107,16 @@ public abstract class PuzzleLayout {
 
     updateLineLimit();
 
-    if (boderComparator == null) {
-      boderComparator = new BlockComparator();
+    if (borderComparator == null) {
+      borderComparator = new BlockComparator();
     }
-    Collections.sort(blocks, boderComparator);
+    Collections.sort(blocks, borderComparator);
 
     return blockList;
   }
 
-  protected List<Block> cutBlockEqualPart(Block block, int hSize, int vSize) {
+  protected List<Block> cutBlockEqualPart(int position, int hSize, int vSize) {
+    Block block = getBlock(position);
     if ((hSize + 1) * (vSize + 1) > 9) {
       Log.e(TAG, "cutBorderEqualPart: the size can not be so great");
       return null;
@@ -120,7 +127,7 @@ public abstract class PuzzleLayout {
       case 1:
         switch (vSize) {
           case 1:
-            blockList.addAll(addCross(block, 1f / 2));
+            blockList.addAll(addCross(position, 1f / 2));
             break;
           case 2:
             Line l1 = BlockUtil.createLine(block, Line.Direction.VERTICAL, 1f / 3);
@@ -204,26 +211,27 @@ public abstract class PuzzleLayout {
     blocks.addAll(blockList);
 
     updateLineLimit();
-    Collections.sort(blocks, boderComparator);
+    Collections.sort(blocks, borderComparator);
 
     return blockList;
   }
 
-  protected List<Block> cutSpiral(Block block) {
+  protected List<Block> cutSpiral(int position) {
+    Block block = getBlock(position);
     blocks.remove(block);
     List<Block> blockList = new ArrayList<>();
 
-    float width = block.width();
-    float height = block.height();
+    int width = block.width();
+    int height = block.height();
 
-    PointF one = new PointF(0, height / 3);
-    PointF two = new PointF(width / 3 * 2, 0);
-    PointF three = new PointF(width, height / 3 * 2);
-    PointF four = new PointF(width / 3, height);
-    PointF five = new PointF(width / 3, height / 3);
-    PointF six = new PointF(width / 3 * 2, height / 3);
-    PointF seven = new PointF(width / 3 * 2, height / 3 * 2);
-    PointF eight = new PointF(width / 3, height / 3 * 2);
+    Point one = new Point(0, height / 3);
+    Point two = new Point(width / 3 * 2, 0);
+    Point three = new Point(width, height / 3 * 2);
+    Point four = new Point(width / 3, height);
+    Point five = new Point(width / 3, height / 3);
+    Point six = new Point(width / 3 * 2, height / 3);
+    Point seven = new Point(width / 3 * 2, height / 3 * 2);
+    Point eight = new Point(width / 3, height / 3 * 2);
 
     Line l1 = new Line(one, six);
     Line l2 = new Line(two, seven);
@@ -285,7 +293,7 @@ public abstract class PuzzleLayout {
     blocks.addAll(blockList);
 
     updateLineLimit();
-    Collections.sort(blocks, boderComparator);
+    Collections.sort(blocks, borderComparator);
 
     return blockList;
   }

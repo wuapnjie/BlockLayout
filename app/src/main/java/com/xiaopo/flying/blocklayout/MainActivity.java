@@ -2,7 +2,9 @@ package com.xiaopo.flying.blocklayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.widget.Button;
+import com.xiaopo.flying.blockengine.Line;
+import com.xiaopo.flying.blockengine.PuzzleLayout;
 import com.xiaopo.flying.blockengine.widget.BlockLayout;
 import com.xiaopo.flying.blockengine.JsonPuzzleLayout;
 import java.io.BufferedReader;
@@ -18,9 +20,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     blockLayout = (BlockLayout) findViewById(R.id.block_layout);
 
-    blockLayout.setPuzzleLayout(new JsonPuzzleLayout(getLayoutInfo()));
-    //blockLayout.addViewAtBlock(new EditText(this), 1);
-
+    blockLayout.setPuzzleLayout(new MainPuzzleLayout());
     blockLayout.post(new Runnable() {
       @Override public void run() {
         blockLayout.printInfo();
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
   private String getLayoutInfo() {
     try {
-      InputStream inputStream = getAssets().open("layout.json");
+      InputStream inputStream = getAssets().open("main_layout.json");
 
       BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
       StringBuilder builder = new StringBuilder();
@@ -48,5 +48,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     return "";
+  }
+
+  private static class MainPuzzleLayout extends PuzzleLayout {
+
+    @Override public void layout() {
+      cutBlockEqualPart(0, 5, Line.Direction.HORIZONTAL);
+    }
   }
 }

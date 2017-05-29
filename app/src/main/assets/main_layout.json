@@ -1,0 +1,8 @@
+{
+  "steps": [{
+    "method": "cutEqual1",
+    "direction": 1,
+    "part":5,
+    "position": 0
+  }]
+}
