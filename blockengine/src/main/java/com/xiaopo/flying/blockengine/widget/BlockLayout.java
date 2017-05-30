@@ -3,7 +3,6 @@ package com.xiaopo.flying.blockengine.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -11,9 +10,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import com.xiaopo.flying.blockengine.Block;
-import com.xiaopo.flying.blockengine.BuildConfig;
-import com.xiaopo.flying.blockengine.PuzzleLayout;
+import com.xiaopo.flying.blockengine.layout.Block;
+import com.xiaopo.flying.blockengine.layout.PuzzleLayout;
 import java.util.HashMap;
 
 /**

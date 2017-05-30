@@ -1,12 +1,13 @@
 package com.xiaopo.flying.blocklayout;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import com.xiaopo.flying.blockengine.Line;
-import com.xiaopo.flying.blockengine.PuzzleLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import com.xiaopo.flying.blockengine.layout.Line;
+import com.xiaopo.flying.blockengine.layout.PuzzleLayout;
 import com.xiaopo.flying.blockengine.widget.BlockLayout;
-import com.xiaopo.flying.blockengine.JsonPuzzleLayout;
+import com.xiaopo.flying.blocklayout.feed.FeedActivity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,8 +51,11 @@ public class MainActivity extends AppCompatActivity {
     return "";
   }
 
-  private static class MainPuzzleLayout extends PuzzleLayout {
+  public void toFeed(View view) {
+    startActivity(new Intent(this, FeedActivity.class));
+  }
 
+  private static class MainPuzzleLayout extends PuzzleLayout {
     @Override public void layout() {
       cutBlockEqualPart(0, 5, Line.Direction.HORIZONTAL);
     }

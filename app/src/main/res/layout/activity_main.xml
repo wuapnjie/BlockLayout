@@ -10,12 +10,14 @@
     tools:context="com.xiaopo.flying.blocklayout.MainActivity"
     >
     <TextView
+        android:id="@+id/btn_feed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top|center_horizontal"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:text="Good morning!"
+        android:text="Feed Activity"
+        android:onClick="toFeed"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         />
