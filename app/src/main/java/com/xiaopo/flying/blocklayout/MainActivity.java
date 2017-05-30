@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    blockLayout = (BlockLayout) findViewById(R.id.block_layout);
 
     blockLayout.setPuzzleLayout(new MainPuzzleLayout());
     blockLayout.post(new Runnable() {

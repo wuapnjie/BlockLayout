@@ -2,7 +2,6 @@
 <com.xiaopo.flying.blockengine.widget.BlockLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/block_layout"
     android:layout_width="match_parent"
     android:layout_height="376dp"
     android:layout_margin="8dp"
@@ -61,5 +60,4 @@
         android:textColor="@android:color/white"
         android:textSize="20sp"
         />
-
 </com.xiaopo.flying.blockengine.widget.BlockLayout>
